@@ -42,7 +42,18 @@ namespace EncodingDecodingApi.Controllers
                 age = 0,
                 name = "zero"
             };
-            return Ok(res);
+
+            List<User> list = new List<User>();
+            list.Add(res);
+            list.Add(res);
+            list.Add(res);
+            list.Add(res);
+            list.Add(res);
+            list.Add(res);
+            list.Add(res);
+            list.Add(res);
+            list.Add(res);
+            return Ok(list);
         }
     }
 }

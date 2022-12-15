@@ -25,7 +25,9 @@ namespace EncodingDecodingApi.Filter
         public async Task Invoke(HttpContext context)
         {
             var request = context.Request;
+            context.Request.ContentType= "application/json";
             Console.WriteLine("LoggingMiddleware invoked.");
+            
             var stream = request.Body;// currently holds the original stream                    
             var originalContent = await new StreamReader(stream).ReadToEndAsync();
             var notModified = true;
@@ -55,8 +57,13 @@ namespace EncodingDecodingApi.Filter
             // Create new memory stream for reading the response; Response body streams are write-only, therefore memory stream is needed here to read
             await using var memoryStream = new MemoryStream();
             context.Response.Body = memoryStream;
-
-            await this.next(context);
+            try
+            {
+                await this.next(context);
+            }catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
 
 
